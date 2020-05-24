@@ -1,0 +1,13 @@
+1.服务器端向客户端发送的头文字全部改为"S//"的形式，
+所以第四次握手时，客户端在读取服务端type_list的时候需改变读取位置.
+
+    def _fourth_handshake_process(self):
+        __fhp_message = self.__socket.recv(1024).decode('utf-8')
+        __client_type = None
+
+!!!!    type_list = eval(__fhp_message[3:])  # 之前是7:
+
+        print(type_list)
+        if self.__type in type_list:
+            __client_type = self.__type
+        self.__socket.send(str(__client_type).encode("UTF-8"))
